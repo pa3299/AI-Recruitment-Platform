@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { CompanyProfile, Pipelines, ProfilePipelineEntry, RecommendedCandidate } from '../types';
 import { callGeminiForMatching } from '../services/geminiService';
@@ -120,52 +119,52 @@ export default function JobBroadcasterTool({ showStatus, isLoading, setIsLoading
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-4">
-                <Rss className="w-6 h-6 mr-2 text-indigo-600" />
-                Job Broadcaster (Prototype)
-            </h2>
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+                    <Rss className="w-6 h-6 mr-3 text-[#4F46E5]" />
+                    Job Broadcaster (Prototype)
+                </h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                        <label className="block">
-                            <span className="text-gray-700 font-medium">Final Job Description</span>
-                            <textarea value={broadcastJobDescription} onChange={(e) => setBroadcastJobDescription(e.target.value)} rows={12} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-4" placeholder="Paste the final, audited job description here to automatically match against your candidate pipeline..."/>
-                        </label>
-                    </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2 space-y-6">
+                        <div>
+                            <label htmlFor="broadcast-jd" className="block text-sm font-medium text-gray-700 mb-1">Final Job Description</label>
+                            <textarea id="broadcast-jd" value={broadcastJobDescription} onChange={(e) => setBroadcastJobDescription(e.target.value)} rows={12} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 bg-white text-black" placeholder="Paste the final, audited job description here to automatically match against your candidate pipeline..."/>
+                        </div>
 
-                    <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Select Platforms to Post On</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            {Object.keys(selectedPlatforms).map(platform => (
-                                <div key={platform} onClick={() => handlePlatformToggle(platform as keyof typeof selectedPlatforms)} className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${selectedPlatforms[platform as keyof typeof selectedPlatforms] ? 'border-indigo-500 bg-indigo-50 shadow-md' : 'border-gray-300 bg-gray-50 hover:border-gray-400'}`}>
-                                    <span className="text-lg font-bold capitalize text-gray-700">{platform}</span>
-                                </div>
-                            ))}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Select Platforms to Post On</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                                {Object.keys(selectedPlatforms).map(platform => (
+                                    <div key={platform} onClick={() => handlePlatformToggle(platform as keyof typeof selectedPlatforms)} className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${selectedPlatforms[platform as keyof typeof selectedPlatforms] ? 'border-indigo-500 bg-indigo-50 shadow-sm' : 'border-gray-300 bg-gray-50 hover:border-gray-400'}`}>
+                                        <span className="text-lg font-bold capitalize text-gray-700">{platform}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="space-y-6">
-                     <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Connections</h3>
-                        <div className="space-y-3">
-                            {Object.keys(connections).map(platform => (
-                                <div key={platform} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                                    <span className="font-medium capitalize text-gray-700">{platform}</span>
-                                    {connections[platform as keyof typeof connections] ? (
-                                        <span className="flex items-center text-sm font-semibold text-green-600"><CheckCheck className="w-4 h-4 mr-1" /> Connected</span>
-                                    ) : (
-                                        <button onClick={() => handleConnect(platform as keyof typeof connections)} className="text-sm text-blue-600 hover:underline" disabled={isLoading}>Connect</button>
-                                    )}
-                                </div>
-                            ))}
+                    <div className="space-y-6">
+                         <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Connections</h3>
+                            <div className="space-y-3">
+                                {Object.keys(connections).map(platform => (
+                                    <div key={platform} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                                        <span className="font-medium capitalize text-gray-700">{platform}</span>
+                                        {connections[platform as keyof typeof connections] ? (
+                                            <span className="flex items-center text-sm font-semibold text-green-600"><CheckCheck className="w-4 h-4 mr-1" /> Connected</span>
+                                        ) : (
+                                            <button onClick={() => handleConnect(platform as keyof typeof connections)} className="text-sm text-blue-600 hover:underline" disabled={isLoading}>Connect</button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
+                        <button onClick={handlePublish} disabled={isPublishDisabled} className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                            {isLoading ? (<Loader2 className="w-5 h-5 mr-2 animate-spin" />) : (<Send className="w-5 h-5 mr-2" />)}
+                            Publish Job Ad
+                        </button>
                     </div>
-                    <button onClick={handlePublish} disabled={isPublishDisabled} className="w-full flex items-center justify-center px-4 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 transition duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
-                        {isLoading ? (<Loader2 className="w-5 h-5 mr-2 animate-spin" />) : (<Send className="w-5 h-5 mr-2" />)}
-                        Publish Job Ad
-                    </button>
                 </div>
             </div>
             

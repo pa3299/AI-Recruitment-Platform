@@ -1,8 +1,7 @@
-
 import React, { useState, useCallback, useRef } from 'react';
 import { CompanyProfile, FileMetadata } from '../types';
 import { callGemini } from '../services/geminiService';
-import { Landmark, Paperclip, FileUp, X, FileImage, FileText, FileSpreadsheet, File, Zap, Loader2 } from './icons';
+import { FileText, Paperclip, FileUp, X, FileImage, FileSpreadsheet, File, Zap, Loader2 } from './icons';
 
 interface CompanyProfileToolProps {
   showStatus: (message: string, duration?: number) => void;
@@ -32,7 +31,6 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
         if (mimeType.includes('text')) return FileText;
         return File;
     };
-
 
     const handleChange = (field: keyof Omit<CompanyProfile, 'files'>) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setCompanyProfile(prev => ({
@@ -144,82 +142,86 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
 
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-4">
-                <Landmark className="w-6 h-6 mr-2 text-indigo-600" />
+        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+                <FileText className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 Company Profile & Context Base
             </h2>
 
-            <div className="space-y-4 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <p className="text-sm text-gray-500 p-2 bg-indigo-50 rounded-lg border border-indigo-200">
+            <div className="space-y-6">
+                <div className="text-sm text-[#4338CA] p-4 bg-[#EEF2FF] rounded-lg border border-[#C7D2FE]">
                     This context base ensures all tools align with your company's identity and values. Changes here will immediately reflect across the suite.
-                </p>
+                </div>
 
-                <label className="block">
-                    <span className="text-gray-700 font-medium">Company Name</span>
+                <div>
+                    <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
                     <input
+                        id="companyName"
                         type="text"
                         value={companyProfile.name}
                         onChange={handleChange('name')}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
                         placeholder="e.g., Acme Corp"
                     />
-                </label>
+                </div>
 
-                <label className="block">
-                    <div className="flex justify-between items-center">
-                        <span className="text-gray-700 font-medium">Core Company Culture Statement / Values</span>
-                        <button onClick={() => handleGenerateField('culture')} disabled={isLoading} className="text-xs flex items-center px-2 py-1 bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 disabled:opacity-50">
+                <div>
+                    <div className="flex justify-between items-center mb-1">
+                        <label htmlFor="culture" className="block text-sm font-medium text-gray-700">Core Company Culture Statement / Values</label>
+                        <button onClick={() => handleGenerateField('culture')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
                             {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
                     </div>
                     <textarea
+                        id="culture"
                         value={companyProfile.culture}
                         onChange={handleChange('culture')}
                         rows={4}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
                         placeholder="e.g., Collaborative, growth-focused environment valuing transparency and continuous learning."
                     />
-                </label>
+                </div>
 
-                <label className="block">
-                     <div className="flex justify-between items-center">
-                        <span className="text-gray-700 font-medium">Organizational Chart/Structure Notes (Internal Context)</span>
-                        <button onClick={() => handleGenerateField('orgStructure')} disabled={isLoading} className="text-xs flex items-center px-2 py-1 bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 disabled:opacity-50">
+                <div>
+                     <div className="flex justify-between items-center mb-1">
+                        <label htmlFor="orgStructure" className="block text-sm font-medium text-gray-700">Organizational Chart/Structure Notes (Internal Context)</label>
+                        <button onClick={() => handleGenerateField('orgStructure')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
                              {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
                     </div>
                     <textarea
+                        id="orgStructure"
                         value={companyProfile.orgStructure}
                         onChange={handleChange('orgStructure')}
                         rows={4}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
                         placeholder="e.g., Hierarchical with a flat management layer in engineering. Report to managers, not directors."
                     />
-                </label>
+                </div>
 
-                <label className="block">
-                    <div className="flex justify-between items-center">
-                        <span className="text-gray-700 font-medium">Recruitment/JD Guidelines (Tone/Style Rules)</span>
-                         <button onClick={() => handleGenerateField('guidelines')} disabled={isLoading} className="text-xs flex items-center px-2 py-1 bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 disabled:opacity-50">
+                <div>
+                    <div className="flex justify-between items-center mb-1">
+                        <label htmlFor="guidelines" className="block text-sm font-medium text-gray-700">Recruitment/JD Guidelines (Tone/Style Rules)</label>
+                         <button onClick={() => handleGenerateField('guidelines')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
                              {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
                     </div>
                     <textarea
+                        id="guidelines"
                         value={companyProfile.guidelines}
                         onChange={handleChange('guidelines')}
                         rows={4}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
                         placeholder="e.g., Use inclusive, plain language. Avoid urgency and competitive jargon."
                     />
-                </label>
+                </div>
 
-                <div className="pt-6 border-t border-gray-200 mt-6">
+                <div className="pt-6 border-t border-gray-200 mt-2">
                     <h3 className="text-lg font-semibold text-gray-700 flex items-center mb-4">
-                        <Paperclip className="w-5 h-5 mr-2 text-indigo-600" />
+                        <Paperclip className="w-5 h-5 mr-2 text-[#4F46E5]" />
                         Supporting Documents (<span className='font-bold ml-1'>{companyProfile.files.length}</span> / {MAX_FILES})
                     </h3>
                     
@@ -229,13 +231,13 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                         className={`flex flex-col items-center justify-center p-6 rounded-lg text-center cursor-pointer transition duration-200 
-                            ${isDragOver ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'} 
+                            ${isDragOver ? 'border-[#4F46E5] bg-indigo-50' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'} 
                             border-2 border-dashed
                         `}
                     >
                         <FileUp className="w-8 h-8 text-indigo-500 mb-2" />
                         <p className="text-sm font-medium text-gray-600">
-                            Drag and drop files here, or <span className="text-indigo-600 font-bold hover:text-indigo-700">click to browse</span>
+                            Drag and drop files here, or <span className="text-[#4F46E5] font-bold hover:text-indigo-700">click to browse</span>
                         </p>
                         <p className="text-xs text-gray-500 mt-1">Accepted: PDF, DOCX, Images, TXT. Max {MAX_FILES} files.</p>
                         <input
@@ -259,7 +261,7 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                                 return (
                                     <li key={index} className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-200">
                                         <div className="flex items-center space-x-3 min-w-0">
-                                            <Icon className="w-5 h-5 text-indigo-600 flex-shrink-0" />
+                                            <Icon className="w-5 h-5 text-[#4F46E5] flex-shrink-0" />
                                             <div className='min-w-0'>
                                                 <p className="text-sm font-medium text-gray-800 truncate" title={file.name}>{file.name}</p>
                                                 <p className="text-xs text-gray-500">{file.type.split('/')[1]?.toUpperCase() || 'Unknown'} - {formatBytes(file.size)}</p>
@@ -277,6 +279,15 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                             })
                         )}
                     </ul>
+                </div>
+                <div className="flex justify-end mt-8">
+                    <button
+                        onClick={() => showStatus('Company profile changes saved!')}
+                        className="px-8 py-3 bg-[#4F46E5] text-white rounded-lg font-semibold shadow-md hover:bg-[#4338CA] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4F46E5] transition"
+                        disabled={isLoading}
+                    >
+                        Save Changes
+                    </button>
                 </div>
             </div>
         </div>

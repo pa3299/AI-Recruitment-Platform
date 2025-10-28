@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  }
-}

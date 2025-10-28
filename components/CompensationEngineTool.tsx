@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { CompanyProfile } from '../types';
 import { callGemini } from '../services/geminiService';
@@ -41,81 +40,87 @@ export default function CompensationEngineTool({ showStatus, statusMessage, isLo
     }, [jobTitle, experience, location, industry, setIsLoading, showStatus, COMP_SYSTEM_PROMPT]);
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-4">
-                <DollarSign className="w-6 h-6 mr-2 text-indigo-600" />
-                Total Compensation Engine ✨
+        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+                <DollarSign className="w-6 h-6 mr-3 text-[#4F46E5]" />
+                Total Compensation Engine
             </h2>
             
-            <p className="text-sm text-gray-500 p-2 bg-gray-100 rounded-lg">
-                Context: Compensation is being calculated for <strong>{companyProfile.name}</strong>.
-            </p>
+            <div className="space-y-6">
+                <p className="text-sm text-gray-500 p-3 bg-gray-50 rounded-lg border">
+                    Context: Compensation is being calculated for <strong>{companyProfile.name}</strong>.
+                </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label className="block">
-                    <span className="text-gray-700 font-medium">Job Title</span>
-                    <input
-                        type="text"
-                        value={jobTitle}
-                        onChange={(e) => setJobTitle(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                    />
-                </label>
-                <label className="block">
-                    <span className="text-gray-700 font-medium">Experience Level</span>
-                    <select
-                        value={experience}
-                        onChange={(e) => setExperience(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                    >
-                        <option value="Entry-level (0-3 years)">Entry-level (0-3 years)</option>
-                        <option value="Mid-level (4-7 years)">Mid-level (4-7 years)</option>
-                        <option value="Senior (8+ years)">Senior (8+ years)</option>
-                        <option value="Lead/Principal">Lead/Principal</option>
-                    </select>
-                </label>
-                <label className="block">
-                    <span className="text-gray-700 font-medium">Location (City, Country)</span>
-                    <input
-                        type="text"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                    />
-                </label>
-                <label className="block">
-                    <span className="text-gray-700 font-medium">Industry / Company Stage</span>
-                    <input
-                        type="text"
-                        value={industry}
-                        onChange={(e) => setIndustry(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                    />
-                </label>
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                        <input
+                            id="jobTitle"
+                            type="text"
+                            value={jobTitle}
+                            onChange={(e) => setJobTitle(e.target.value)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">Experience Level</label>
+                        <select
+                            id="experience"
+                            value={experience}
+                            onChange={(e) => setExperience(e.target.value)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        >
+                            <option value="Entry-level (0-3 years)">Entry-level (0-3 years)</option>
+                            <option value="Mid-level (4-7 years)">Mid-level (4-7 years)</option>
+                            <option value="Senior (8+ years)">Senior (8+ years)</option>
+                            <option value="Lead/Principal">Lead/Principal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location (City, Country)</label>
+                        <input
+                            id="location"
+                            type="text"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-1">Industry / Company Stage</label>
+                        <input
+                            id="industry"
+                            type="text"
+                            value={industry}
+                            onChange={(e) => setIndustry(e.target.value)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        />
+                    </div>
+                </div>
 
-            <button
-                onClick={handleCalculate}
-                disabled={isLoading || !jobTitle || !location}
-                className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-                {isLoading ? (
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                ) : (
-                    <TrendingUp className="w-5 h-5 mr-2" />
-                )}
-                Calculate Competitive Range
-            </button>
-            
-            <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
-                {statusMessage}
-            </div>
+                <button
+                    onClick={handleCalculate}
+                    disabled={isLoading || !jobTitle || !location}
+                    className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {isLoading ? (
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    ) : (
+                        <TrendingUp className="w-5 h-5 mr-2" />
+                    )}
+                    Calculate Competitive Range
+                </button>
+                
+                <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
+                    {statusMessage}
+                </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 min-h-[150px]">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Compensation Results</h3>
-                <pre className="whitespace-pre-wrap text-gray-700 text-sm font-sans">
-                    {compResult || 'Competitive compensation data will appear here, sourced using Google Search grounding.'}
-                </pre>
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 min-h-[150px]">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Compensation Results</h3>
+                    <pre className="whitespace-pre-wrap text-gray-700 text-sm font-sans">
+                        {compResult || 'Competitive compensation data will appear here, sourced using Google Search grounding.'}
+                    </pre>
+                </div>
             </div>
         </div>
     );

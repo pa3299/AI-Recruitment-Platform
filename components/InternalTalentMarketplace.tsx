@@ -13,9 +13,9 @@ interface InternalTalentMarketplaceProps {
 export default function InternalTalentMarketplace({ recommendedCandidates, isMatching, totalCandidatesInPipelines, broadcastJobDescription }: InternalTalentMarketplaceProps) {
     if (totalCandidatesInPipelines === 0) {
         return (
-             <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200 text-center">
+             <div className="p-8 bg-white rounded-2xl shadow-lg border border-gray-200 text-center">
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center justify-center mb-2">
-                    <UserCheck className="w-6 h-6 mr-2 text-indigo-600" />
+                    <UserCheck className="w-6 h-6 mr-3 text-[#4F46E5]" />
                     Internal Talent Marketplace
                 </h3>
                  <p className="text-sm text-gray-500">Your candidate pipelines are empty. Add profiles to see internal recommendations here.</p>
@@ -25,9 +25,9 @@ export default function InternalTalentMarketplace({ recommendedCandidates, isMat
     
     if (!broadcastJobDescription.trim()) {
          return (
-             <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200 text-center">
+             <div className="p-8 bg-white rounded-2xl shadow-lg border border-gray-200 text-center">
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center justify-center mb-2">
-                    <UserCheck className="w-6 h-6 mr-2 text-indigo-600" />
+                    <UserCheck className="w-6 h-6 mr-3 text-[#4F46E5]" />
                     Internal Talent Marketplace
                 </h3>
                  <p className="text-sm text-gray-500">Start writing a job description to automatically see matching candidates from your pipeline.</p>
@@ -36,9 +36,9 @@ export default function InternalTalentMarketplace({ recommendedCandidates, isMat
     }
     
     return (
-        <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+        <div className="p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
              <h3 className="text-lg font-semibold text-gray-800 flex items-center mb-4">
-                <UserCheck className="w-6 h-6 mr-2 text-indigo-600" />
+                <UserCheck className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 Recommended Candidates from Your Pipeline (Powered by Gemini 2.5 Pro)
             </h3>
 

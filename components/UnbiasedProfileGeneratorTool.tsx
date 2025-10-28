@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { CompanyProfile, Pipelines, Base64File } from '../types';
 import { callGeminiMultimodal, callGemini } from '../services/geminiService';
@@ -163,26 +162,34 @@ The final output must be in clean, readable Markdown. Use headings for each sect
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-4"><ShieldCheck className="w-6 h-6 mr-2 text-indigo-600" />Unbiased Profile Generator ✨</h2>
-            <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                <p className="text-sm text-gray-500 p-2 bg-indigo-50 rounded-lg border border-indigo-200 mb-4">Provide the candidate's name, then upload their documents or paste their CV text to generate a bias-free profile.</p>
-                <label className="block mb-4"><span className="text-gray-700 font-medium">Candidate Name (for Pipeline)</span><input type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3" placeholder="e.g., John Doe"/></label>
-                <div className="pt-2 mb-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input type="file" ref={cvInputRef} onChange={(e) => handleFileChange(e, setCvFileData, 'CV/Resume')} accept=".pdf,image/jpeg,image/png,.doc,.docx" className="hidden" />
-                        <button onClick={() => cvInputRef.current?.click()} className={`w-full text-center p-3 text-sm rounded-lg border-2 border-dashed transition duration-150 shadow-sm truncate ${isFileLoaded(cvFileData) ? 'border-green-400 bg-green-50 text-green-700 hover:bg-green-100' : 'border-gray-300 bg-gray-50 hover:border-indigo-500 text-gray-700 hover:bg-white'}`} title={getFileName(cvFileData)}><FileArchive className="w-4 h-4 inline mr-2" />{isFileLoaded(cvFileData) ? `CV: ${getFileName(cvFileData)}` : 'Upload CV/Resume'}</button>
-                        <input type="file" ref={clInputRef} onChange={(e) => handleFileChange(e, setClFileData, 'Cover Letter')} accept=".pdf,image/jpeg,image/png,.doc,.docx" className="hidden" />
-                        <button onClick={() => clInputRef.current?.click()} className={`w-full text-center p-3 text-sm rounded-lg border-2 border-dashed transition duration-150 shadow-sm truncate ${isFileLoaded(clFileData) ? 'border-green-400 bg-green-50 text-green-700 hover:bg-green-100' : 'border-gray-300 bg-gray-50 hover:border-indigo-500 text-gray-700 hover:bg-white'}`} title={getFileName(clFileData)}><FileText className="w-4 h-4 inline mr-2" />{isFileLoaded(clFileData) ? `CL: ${getFileName(clFileData)}` : 'Upload Cover Letter'}</button>
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6"><ShieldCheck className="w-6 h-6 mr-3 text-[#4F46E5]" />Unbiased Profile Generator</h2>
+                <div className="space-y-6">
+                    <p className="text-sm text-gray-500 p-3 bg-indigo-50 rounded-lg border border-indigo-200">Provide the candidate's name, then upload their documents or paste their CV text to generate a bias-free profile.</p>
+                    <div>
+                        <label htmlFor="candidateName" className="block text-sm font-medium text-gray-700 mb-1">Candidate Name (for Pipeline)</label>
+                        <input id="candidateName" type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black" placeholder="e.g., John Doe"/>
                     </div>
+                    <div className="pt-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input type="file" ref={cvInputRef} onChange={(e) => handleFileChange(e, setCvFileData, 'CV/Resume')} accept=".pdf,image/jpeg,image/png,.doc,.docx" className="hidden" />
+                            <button onClick={() => cvInputRef.current?.click()} className={`w-full text-center p-3 text-sm rounded-lg border-2 border-dashed transition duration-150 shadow-sm truncate ${isFileLoaded(cvFileData) ? 'border-green-400 bg-green-50 text-green-700 hover:bg-green-100' : 'border-gray-300 bg-gray-50 hover:border-indigo-500 text-gray-700 hover:bg-white'}`} title={getFileName(cvFileData)}><FileArchive className="w-4 h-4 inline mr-2" />{isFileLoaded(cvFileData) ? `CV: ${getFileName(cvFileData)}` : 'Upload CV/Resume'}</button>
+                            <input type="file" ref={clInputRef} onChange={(e) => handleFileChange(e, setClFileData, 'Cover Letter')} accept=".pdf,image/jpeg,image/png,.doc,.docx" className="hidden" />
+                            <button onClick={() => clInputRef.current?.click()} className={`w-full text-center p-3 text-sm rounded-lg border-2 border-dashed transition duration-150 shadow-sm truncate ${isFileLoaded(clFileData) ? 'border-green-400 bg-green-50 text-green-700 hover:bg-green-100' : 'border-gray-300 bg-gray-50 hover:border-indigo-500 text-gray-700 hover:bg-white'}`} title={getFileName(clFileData)}><FileText className="w-4 h-4 inline mr-2" />{isFileLoaded(clFileData) ? `CL: ${getFileName(clFileData)}` : 'Upload Cover Letter'}</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="rawText" className="block text-sm font-medium text-gray-700 mb-1">Or Paste Raw CV/Cover Letter Text</label>
+                        <textarea id="rawText" value={rawText} onChange={(e) => setRawText(e.target.value)} rows={8} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 font-mono text-sm bg-white text-black" placeholder="Paste full CV text here if you don't have a file." />
+                    </div>
+                    <button onClick={handleGenerate} disabled={isGenerateDisabled} className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-teal-600 hover:bg-teal-700 transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">{isLoading ? (<Loader2 className="w-5 h-5 mr-2 animate-spin" />) : (<ShieldCheck className="w-5 h-5 mr-2" />)}Generate Unbiased Profile & Fit Summary</button>
                 </div>
-                <label className="block"><span className="text-gray-700 font-medium">Or Paste Raw CV/Cover Letter Text</span><textarea value={rawText} onChange={(e) => setRawText(e.target.value)} rows={8} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-4 font-mono text-sm" placeholder="Paste full CV text here if you don't have a file." /></label>
-                <button onClick={handleGenerate} disabled={isGenerateDisabled} className="mt-6 w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-teal-600 hover:bg-teal-700 transition duration-150 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">{isLoading ? (<Loader2 className="w-5 h-5 mr-2 animate-spin" />) : (<ShieldCheck className="w-5 h-5 mr-2" />)}Generate Unbiased Profile & Fit Summary</button>
             </div>
             <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>{statusMessage}</div>
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 space-y-6">
                  {(anonymizedResult && fitSummaryResult) && (
                      <div className="border-b pb-4 flex flex-col sm:flex-row gap-4 items-center justify-end">
-                        <select value={pipelineToSaveTo} onChange={(e) => setPipelineToSaveTo(e.target.value)} className="w-full sm:w-auto p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" disabled={pipelineNames.length === 0}>
+                        <select value={pipelineToSaveTo} onChange={(e) => setPipelineToSaveTo(e.target.value)} className="w-full sm:w-auto p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white text-black" disabled={pipelineNames.length === 0}>
                             {pipelineNames.length > 0 ? (pipelineNames.map(name => <option key={name} value={name}>{name}</option>)) : (<option>Create a pipeline first</option>)}
                         </select>
                         <button onClick={handleSaveProfile} disabled={isCurrentProfileSaved || !candidateName || !pipelineToSaveTo} className="w-full sm:w-auto flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-150 shadow-sm" title={!candidateName ? "Please enter a candidate name to save." : !pipelineToSaveTo ? "Please select a pipeline." : "Save to Pipeline"}>
