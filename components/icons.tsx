@@ -7,7 +7,7 @@ const Icon: React.FC<React.SVGProps<SVGSVGElement>> = ({ children, ...props }) =
 );
 
 export const AiSuiteLogo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg width="24" height="24" viewBox="0 0 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path d="M12 2L22 7.5V16.5L12 22L2 16.5V7.5L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M12 12L17 10.25" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M12 12V17" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -28,10 +28,10 @@ export const LogOut: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 
 export const RefreshCcw: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></Icon>
+    <Icon {...props}><path d="M3 3v6h6M21 12a9 9 0 0 0-15-5.3L3 10"/><path d="M21 21v-6h-6M3 12a9 9 0 0 0 15 5.3l3-2.3"/></Icon>
 );
 export const ThumbsUp: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M7 10v12"/><path d="M15.5 10l-3-7-3 7h-5l2 10h12l2-10h-5z"/></Icon>
+    <Icon {...props}><path d="M7 10v12"/><path d="M15.5 10l-3-7-3 7h-5l2 10h12l2-10z"/></Icon>
 );
 export const XCircle: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></Icon>
@@ -46,16 +46,16 @@ export const Clipboard: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></Icon>
 );
 export const AlertTriangle: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></Icon>
+    <Icon {...props}><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></Icon>
 );
 export const Send: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></Icon>
+    <Icon {...props}><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></Icon>
 );
 export const FileText: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></Icon>
 );
 export const FileUp: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></Icon>
 );
 export const Paperclip: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.59a2 2 0 0 1-2.83-2.83l8.49-8.48"/></Icon>
@@ -70,7 +70,7 @@ export const ScanSearch: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-2.5-2.5"/></Icon>
 );
 export const Edit: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></Icon>
+    <Icon {...props}><path d="M17 3a2.85 2.83 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></Icon>
 );
 export const TrendingUp: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></Icon>
@@ -82,19 +82,19 @@ export const Zap: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>
 );
 export const File: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></Icon>
 );
 export const FileImage: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><circle cx="10" cy="14" r="2"/><path d="m20 18-3-3-2 2-3-3-2 2"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="10.5" cy="13.5" r="2.5"/><path d="m21 15-3.5-3.5a1.5 1.5 0 0 0-2 0L11 16"/></Icon>
 );
 export const FileSpreadsheet: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h1v4"/><path d="M12 13h1v4"/><path d="M16 13h1v4"/><path d="M8 13h8"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h1v4"/><path d="M12 13h1v4"/><path d="M15 13h1v4"/><path d="M8 13h8"/></Icon>
 );
 export const FileArchive: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><circle cx="12" cy="15" r="2"/><path d="M12 17v-2"/></Icon>
+    <Icon {...props}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="12" cy="15" r="2"/><path d="M12 17v-2"/></Icon>
 );
 export const X: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></Icon>
+    <Icon {...props}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></Icon>
 );
 export const Users: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>
@@ -115,11 +115,26 @@ export const GripVertical: React.FC<React.SVGProps<SVGSVGElement>> = (props) => 
     <Icon {...props}><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></Icon>
 );
 export const PlusCircle: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="16"/><line x1="8" x2="16" y1="12" y2="12"/></Icon>
+    <Icon {...props}><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></Icon>
 );
 export const Rss: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></Icon>
 );
 export const UserCheck: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></Icon>
+);
+export const User: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></Icon>
+);
+export const Mail: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></Icon>
+);
+export const Sun: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></Icon>
+);
+export const Moon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></Icon>
+);
+export const Monitor: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></Icon>
 );

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useLayoutEffect } from 'react';
 import { CompanyProfile, Pipelines } from './types';
 import { AiSuiteLogo, ShieldCheck, Users, Rss, MessageSquareMore, MessageSquare, ScanSearch, DollarSign, FileText, Settings, LogOut } from './components/icons';
 import CompanyProfileTool from './components/CompanyProfileTool';
@@ -9,6 +9,7 @@ import InterviewQuestionGeneratorTool from './components/InterviewQuestionGenera
 import GenerativeFeedbackTool from './components/GenerativeFeedbackTool';
 import JDAnalysisTool from './components/JDAnalysisTool';
 import CompensationEngineTool from './components/CompensationEngineTool';
+import SettingsTool from './components/SettingsTool';
 
 export default function App() {
     const [companyProfile, setCompanyProfile] = useState<CompanyProfile>({
@@ -24,7 +25,31 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [pipelines, setPipelines] = useState<Pipelines>({});
     const [broadcastJobDescription, setBroadcastJobDescription] = useState('');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'system');
 
+    useLayoutEffect(() => {
+        const applyTheme = (t: string) => {
+            if (t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        };
+
+        applyTheme(theme);
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => applyTheme(theme);
+
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, [theme]);
+
+    const handleSetTheme = (newTheme: string) => {
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        showStatus(`Theme changed to ${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)}`);
+    };
 
     const showStatus = useCallback((message: string, duration = 3000) => {
         setStatusMessage(message);
@@ -68,13 +93,15 @@ export default function App() {
                 return <JobBroadcasterTool {...commonProps} />;
             case 'feedback':
                 return <GenerativeFeedbackTool {...commonProps} />;
+            case 'settings':
+                return <SettingsTool showStatus={showStatus} theme={theme} setTheme={handleSetTheme} />;
             default:
                 return <CompanyProfileTool {...commonProps} />;
         }
     };
 
     return (
-        <div className="flex min-h-screen bg-[#F8F9FA] font-sans">
+        <div className="flex min-h-screen bg-[#F8F9FA] dark:bg-slate-900 font-sans transition-colors duration-300">
             {/* Sidebar */}
             <aside className="w-64 bg-[#0F172A] text-white flex flex-col fixed h-full">
                 <div className="flex items-center justify-center h-20 border-b border-gray-700">
@@ -103,7 +130,15 @@ export default function App() {
                     })}
                 </nav>
                 <div className="p-4 border-t border-gray-700 space-y-2">
-                     <button className="w-full flex items-center p-3 rounded-lg transition duration-150 text-sm font-medium text-left text-gray-300 hover:bg-gray-700 hover:text-white">
+                    <button
+                        onClick={() => setActiveTool('settings')}
+                        className={`w-full flex items-center p-3 rounded-lg transition duration-150 text-sm font-medium text-left ${
+                            activeTool === 'settings' 
+                                ? 'bg-[#4F46E5] text-white' 
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        }`}
+                        disabled={isLoading}
+                    >
                         <Settings className="w-5 h-5 mr-3" />
                         Settings
                     </button>
@@ -117,11 +152,11 @@ export default function App() {
             {/* Main Content */}
             <main className="flex-1 ml-64 p-10">
                  <header className="text-center mb-10">
-                    <AiSuiteLogo className="w-16 h-16 inline-block text-[#0F172A] mb-4" />
-                    <h1 className="text-4xl font-extrabold text-gray-800">
+                    <AiSuiteLogo className="w-16 h-16 inline-block text-[#0F172A] dark:text-gray-200 mb-4" />
+                    <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-100">
                         The AI Recruitment Suite
                     </h1>
-                    <p className="text-gray-500 mt-2 max-w-2xl mx-auto">Centralized tools for unbiased sourcing, competitive compensation, and empathetic candidate communication.</p>
+                    <p className="text-gray-500 dark:text-gray-400 mt-2 max-w-2xl mx-auto">Centralized tools for unbiased sourcing, competitive compensation, and empathetic candidate communication.</p>
                 </header>
 
                 <div className="max-w-7xl mx-auto">

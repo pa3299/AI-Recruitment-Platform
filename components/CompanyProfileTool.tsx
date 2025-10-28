@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef } from 'react';
 import { CompanyProfile, FileMetadata } from '../types';
 import { callGemini } from '../services/geminiService';
@@ -142,33 +143,33 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
 
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6">
                 <FileText className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 Company Profile & Context Base
             </h2>
 
             <div className="space-y-6">
-                <div className="text-sm text-[#4338CA] p-4 bg-[#EEF2FF] rounded-lg border border-[#C7D2FE]">
+                <div className="text-sm text-[#4338CA] dark:text-indigo-300 p-4 bg-[#EEF2FF] dark:bg-indigo-900/20 rounded-lg border border-[#C7D2FE] dark:border-indigo-800/50">
                     This context base ensures all tools align with your company's identity and values. Changes here will immediately reflect across the suite.
                 </div>
 
                 <div>
-                    <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
+                    <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name</label>
                     <input
                         id="companyName"
                         type="text"
                         value={companyProfile.name}
                         onChange={handleChange('name')}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         placeholder="e.g., Acme Corp"
                     />
                 </div>
 
                 <div>
                     <div className="flex justify-between items-center mb-1">
-                        <label htmlFor="culture" className="block text-sm font-medium text-gray-700">Core Company Culture Statement / Values</label>
-                        <button onClick={() => handleGenerateField('culture')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
+                        <label htmlFor="culture" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Core Company Culture Statement / Values</label>
+                        <button onClick={() => handleGenerateField('culture')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] dark:bg-indigo-900/50 dark:text-indigo-300 rounded-md hover:bg-indigo-200 dark:hover:bg-indigo-900 disabled:opacity-50 font-semibold">
                             {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
@@ -178,15 +179,15 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                         value={companyProfile.culture}
                         onChange={handleChange('culture')}
                         rows={4}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         placeholder="e.g., Collaborative, growth-focused environment valuing transparency and continuous learning."
                     />
                 </div>
 
                 <div>
                      <div className="flex justify-between items-center mb-1">
-                        <label htmlFor="orgStructure" className="block text-sm font-medium text-gray-700">Organizational Chart/Structure Notes (Internal Context)</label>
-                        <button onClick={() => handleGenerateField('orgStructure')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
+                        <label htmlFor="orgStructure" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Organizational Chart/Structure Notes (Internal Context)</label>
+                        <button onClick={() => handleGenerateField('orgStructure')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] dark:bg-indigo-900/50 dark:text-indigo-300 rounded-md hover:bg-indigo-200 dark:hover:bg-indigo-900 disabled:opacity-50 font-semibold">
                              {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
@@ -196,15 +197,15 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                         value={companyProfile.orgStructure}
                         onChange={handleChange('orgStructure')}
                         rows={4}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         placeholder="e.g., Hierarchical with a flat management layer in engineering. Report to managers, not directors."
                     />
                 </div>
 
                 <div>
                     <div className="flex justify-between items-center mb-1">
-                        <label htmlFor="guidelines" className="block text-sm font-medium text-gray-700">Recruitment/JD Guidelines (Tone/Style Rules)</label>
-                         <button onClick={() => handleGenerateField('guidelines')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] rounded-md hover:bg-indigo-200 disabled:opacity-50 font-semibold">
+                        <label htmlFor="guidelines" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Recruitment/JD Guidelines (Tone/Style Rules)</label>
+                         <button onClick={() => handleGenerateField('guidelines')} disabled={isLoading} className="text-xs flex items-center px-3 py-1 bg-indigo-100 text-[#4338CA] dark:bg-indigo-900/50 dark:text-indigo-300 rounded-md hover:bg-indigo-200 dark:hover:bg-indigo-900 disabled:opacity-50 font-semibold">
                              {isLoading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Zap className="w-4 h-4 mr-1"/>}
                             Generate
                         </button>
@@ -214,13 +215,13 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                         value={companyProfile.guidelines}
                         onChange={handleChange('guidelines')}
                         rows={4}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                        className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         placeholder="e.g., Use inclusive, plain language. Avoid urgency and competitive jargon."
                     />
                 </div>
 
-                <div className="pt-6 border-t border-gray-200 mt-2">
-                    <h3 className="text-lg font-semibold text-gray-700 flex items-center mb-4">
+                <div className="pt-6 border-t border-gray-200 dark:border-slate-700 mt-2">
+                    <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 flex items-center mb-4">
                         <Paperclip className="w-5 h-5 mr-2 text-[#4F46E5]" />
                         Supporting Documents (<span className='font-bold ml-1'>{companyProfile.files.length}</span> / {MAX_FILES})
                     </h3>
@@ -231,15 +232,15 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                         className={`flex flex-col items-center justify-center p-6 rounded-lg text-center cursor-pointer transition duration-200 
-                            ${isDragOver ? 'border-[#4F46E5] bg-indigo-50' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'} 
+                            ${isDragOver ? 'border-[#4F46E5] bg-indigo-50 dark:bg-indigo-900/30' : 'border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-700'} 
                             border-2 border-dashed
                         `}
                     >
                         <FileUp className="w-8 h-8 text-indigo-500 mb-2" />
-                        <p className="text-sm font-medium text-gray-600">
+                        <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
                             Drag and drop files here, or <span className="text-[#4F46E5] font-bold hover:text-indigo-700">click to browse</span>
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">Accepted: PDF, DOCX, Images, TXT. Max {MAX_FILES} files.</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Accepted: PDF, DOCX, Images, TXT. Max {MAX_FILES} files.</p>
                         <input
                             type="file"
                             multiple
@@ -252,24 +253,24 @@ export default function CompanyProfileTool({ showStatus, companyProfile, setComp
                     
                     <ul className="mt-4 space-y-3">
                         {companyProfile.files.length === 0 ? (
-                            <li className="text-sm text-gray-500 p-3 bg-white rounded-lg border border-gray-200">
+                            <li className="text-sm text-gray-500 dark:text-gray-400 p-3 bg-white dark:bg-slate-700/50 rounded-lg border border-gray-200 dark:border-slate-700">
                                 No documents uploaded yet.
                             </li>
                         ) : (
                             companyProfile.files.map((file, index) => {
                                 const Icon = getFileIcon(file.type);
                                 return (
-                                    <li key={index} className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-200">
+                                    <li key={index} className="flex items-center justify-between p-3 bg-white dark:bg-slate-700/50 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
                                         <div className="flex items-center space-x-3 min-w-0">
                                             <Icon className="w-5 h-5 text-[#4F46E5] flex-shrink-0" />
                                             <div className='min-w-0'>
-                                                <p className="text-sm font-medium text-gray-800 truncate" title={file.name}>{file.name}</p>
-                                                <p className="text-xs text-gray-500">{file.type.split('/')[1]?.toUpperCase() || 'Unknown'} - {formatBytes(file.size)}</p>
+                                                <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate" title={file.name}>{file.name}</p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">{file.type.split('/')[1]?.toUpperCase() || 'Unknown'} - {formatBytes(file.size)}</p>
                                             </div>
                                         </div>
                                         <button
                                             onClick={() => handleRemoveFile(file.name)}
-                                            className="p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition duration-150 flex-shrink-0"
+                                            className="p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/50 transition duration-150 flex-shrink-0"
                                             title={`Remove ${file.name}`}
                                         >
                                             <X className="w-4 h-4" />

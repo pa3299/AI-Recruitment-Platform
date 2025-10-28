@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { CompanyProfile, AuditResult } from '../types';
 import { callGeminiStructured } from '../services/geminiService';
@@ -26,9 +27,9 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
 
     const getScoreClasses = (score?: number) => {
         if (!score) return 'text-gray-500 bg-gray-100';
-        if (score <= 3) return 'text-green-700 bg-green-100 border-green-300';
-        if (score <= 7) return 'text-yellow-700 bg-yellow-100 border-yellow-300';
-        return 'text-red-700 bg-red-100 border-red-300';
+        if (score <= 3) return 'text-green-700 bg-green-100 border-green-300 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700';
+        if (score <= 7) return 'text-yellow-700 bg-yellow-100 border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700';
+        return 'text-red-700 bg-red-100 border-red-300 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700';
     };
     
     const handleAudit = useCallback(async () => {
@@ -75,28 +76,28 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
     };
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6">
                 <ScanSearch className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 JD Analysis & Bias Audit
             </h2>
             
             <div className="space-y-6">
                 <div>
-                    <label htmlFor="jd-text" className="block text-sm font-medium text-gray-700 mb-1">Job Description Text</label>
+                    <label htmlFor="jd-text" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Description Text</label>
                     <div className="relative mt-1">
                         <textarea
                             id="jd-text"
                             value={jobDescription}
                             onChange={(e) => setJobDescription(e.target.value)}
                             rows={8}
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 font-mono text-sm pr-14 bg-white text-black"
+                            className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 font-mono text-sm pr-14 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                             placeholder="Paste your Job Description here for analysis."
                         />
                         <button
                             onClick={handleLoadFromBroadcaster}
                             disabled={!broadcastJobDescription.trim()}
-                            className="absolute top-3 right-3 p-2 text-indigo-600 bg-indigo-100 rounded-full hover:bg-indigo-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition"
+                            className="absolute top-3 right-3 p-2 text-indigo-600 bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-300 rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-900 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition"
                             title="Load from Job Broadcaster"
                         >
                             <RefreshCcw className="w-5 h-5" />
@@ -117,12 +118,12 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
                     Audit for Bias and Suggest Revision (Targeting Score 1-3)
                 </button>
                 
-                <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
+                <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
                     {statusMessage}
                 </div>
 
                 {auditResult && auditResult.error && (
-                    <div className="p-4 bg-red-100 text-red-800 rounded-lg border border-red-400">
+                    <div className="p-4 bg-red-100 text-red-800 rounded-lg border border-red-400 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700">
                         <strong>Error:</strong> {auditResult.error}
                     </div>
                 )}
@@ -139,7 +140,7 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
                             <p className="mt-2 font-medium">Risk Level: <span className="uppercase">{auditResult.riskLevel}</span> (1-3 Low, 4-7 Medium, 8-10 High)</p>
                         </div>
 
-                        <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">Actionable Suggestions ({auditResult.suggestions.length})</h3>
+                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 border-b dark:border-slate-600 pb-2">Actionable Suggestions ({auditResult.suggestions.length})</h3>
                         
                         <div className="space-y-3">
                             {auditResult.suggestions.map((s, index) => {
@@ -147,21 +148,21 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
                                 return (
                                     <div 
                                         key={index} 
-                                        className={`p-4 border rounded-lg shadow-sm transition duration-300 ${isApplied ? 'bg-green-50 border-green-300' : 'bg-white border-gray-200'}`}
+                                        className={`p-4 border rounded-lg shadow-sm transition duration-300 ${isApplied ? 'bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700' : 'bg-white dark:bg-slate-700/50 border-gray-200 dark:border-slate-600'}`}
                                     >
-                                        <div className="text-xs font-medium text-indigo-600 mb-1">{s.biasType}</div>
+                                        <div className="text-xs font-medium text-indigo-600 dark:text-indigo-400 mb-1">{s.biasType}</div>
                                         <div className="flex items-center justify-between">
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm text-gray-700">
-                                                    <span className={`mr-2 font-mono ${isApplied ? 'text-gray-500 line-through' : 'text-red-500 line-through'}`}>{s.biasedPhrase}</span> 
+                                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                                    <span className={`mr-2 font-mono ${isApplied ? 'text-gray-500 line-through' : 'text-red-500 dark:text-red-400 line-through'}`}>{s.biasedPhrase}</span> 
                                                     <Zap className="w-4 h-4 inline text-green-500 mx-1" />
-                                                    <span className={`font-semibold font-mono ${isApplied ? 'text-green-600' : 'text-green-700'}`}>{s.neutralSuggestion}</span>
+                                                    <span className={`font-semibold font-mono ${isApplied ? 'text-green-600 dark:text-green-400' : 'text-green-700 dark:text-green-300'}`}>{s.neutralSuggestion}</span>
                                                 </p>
                                             </div>
                                             <button
                                                 onClick={() => handleApplySuggestion(s.biasedPhrase, s.neutralSuggestion, index)}
                                                 disabled={isApplied}
-                                                className={`ml-4 flex-shrink-0 px-3 py-1 text-sm font-medium rounded-full transition duration-150 ${isApplied ? 'text-white bg-green-500 shadow-inner cursor-not-allowed' : 'text-indigo-700 bg-indigo-100 hover:bg-indigo-200 shadow-md'}`}
+                                                className={`ml-4 flex-shrink-0 px-3 py-1 text-sm font-medium rounded-full transition duration-150 ${isApplied ? 'text-white bg-green-500 shadow-inner cursor-not-allowed' : 'text-indigo-700 bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/50 dark:text-indigo-300 dark:hover:bg-indigo-900 shadow-md'}`}
                                             >
                                                 {isApplied ? <span className="flex items-center"><CheckCheck className="w-4 h-4 mr-1" /> Applied</span> : 'Apply'}
                                             </button>
@@ -171,9 +172,9 @@ export default function JDAnalysisTool({ showStatus, statusMessage, isLoading, s
                             })}
                         </div>
 
-                        <h3 className="text-xl font-semibold text-gray-800 pt-4 border-t mt-4">Full Revised JD</h3>
-                        <div className="bg-gray-100 p-4 rounded-lg border border-gray-300">
-                            <pre className="whitespace-pre-wrap text-gray-700 text-sm font-sans">
+                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 pt-4 border-t dark:border-slate-600 mt-4">Full Revised JD</h3>
+                        <div className="bg-gray-100 dark:bg-slate-900/50 p-4 rounded-lg border border-gray-300 dark:border-slate-700">
+                            <pre className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 text-sm font-sans">
                                 {auditResult.revisedJobDescription}
                             </pre>
                         </div>

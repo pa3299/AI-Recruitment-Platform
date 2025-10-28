@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { CompanyProfile } from '../types';
 import { callGemini } from '../services/geminiService';
@@ -40,35 +41,35 @@ export default function CompensationEngineTool({ showStatus, statusMessage, isLo
     }, [jobTitle, experience, location, industry, setIsLoading, showStatus, COMP_SYSTEM_PROMPT]);
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6">
                 <DollarSign className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 Total Compensation Engine
             </h2>
             
             <div className="space-y-6">
-                <p className="text-sm text-gray-500 p-3 bg-gray-50 rounded-lg border">
+                <p className="text-sm text-gray-500 dark:text-gray-400 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg border dark:border-slate-700">
                     Context: Compensation is being calculated for <strong>{companyProfile.name}</strong>.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
                         <input
                             id="jobTitle"
                             type="text"
                             value={jobTitle}
                             onChange={(e) => setJobTitle(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         />
                     </div>
                     <div>
-                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">Experience Level</label>
+                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Experience Level</label>
                         <select
                             id="experience"
                             value={experience}
                             onChange={(e) => setExperience(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         >
                             <option value="Entry-level (0-3 years)">Entry-level (0-3 years)</option>
                             <option value="Mid-level (4-7 years)">Mid-level (4-7 years)</option>
@@ -77,23 +78,23 @@ export default function CompensationEngineTool({ showStatus, statusMessage, isLo
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location (City, Country)</label>
+                        <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Location (City, Country)</label>
                         <input
                             id="location"
                             type="text"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         />
                     </div>
                     <div>
-                        <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-1">Industry / Company Stage</label>
+                        <label htmlFor="industry" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Industry / Company Stage</label>
                         <input
                             id="industry"
                             type="text"
                             value={industry}
                             onChange={(e) => setIndustry(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"
                         />
                     </div>
                 </div>
@@ -111,13 +112,13 @@ export default function CompensationEngineTool({ showStatus, statusMessage, isLo
                     Calculate Competitive Range
                 </button>
                 
-                <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
+                <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
                     {statusMessage}
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 min-h-[150px]">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Compensation Results</h3>
-                    <pre className="whitespace-pre-wrap text-gray-700 text-sm font-sans">
+                <div className="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-lg border border-gray-200 dark:border-slate-700 min-h-[150px]">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Compensation Results</h3>
+                    <pre className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 text-sm font-sans">
                         {compResult || 'Competitive compensation data will appear here, sourced using Google Search grounding.'}
                     </pre>
                 </div>

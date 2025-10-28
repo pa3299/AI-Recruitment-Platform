@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { CompanyProfile } from '../types';
 import { callGemini } from '../services/geminiService';
@@ -46,32 +47,32 @@ export default function InterviewQuestionGeneratorTool({ showStatus, statusMessa
     const totalQuestions = technicalCount + behavioralCount + cultureCount;
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6">
                 <MessageSquareMore className="w-6 h-6 mr-3 text-[#4F46E5]" />
                 Competency-Based Interview Generator
             </h2>
 
             <div className="space-y-6">
-                <p className="text-sm text-gray-500 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                <p className="text-sm text-gray-500 dark:text-gray-400 p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800/50">
                     Context: Generating questions for <strong>{companyProfile.name}</strong>.
                     Culture: "{companyProfile.culture}".
                 </p>
 
                 <div className="space-y-4">
                     <div>
-                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-1">Target Job Title</label>
-                        <input id="jobTitle" type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black" placeholder="e.g., Senior Data Scientist"/>
+                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Job Title</label>
+                        <input id="jobTitle" type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., Senior Data Scientist"/>
                     </div>
 
                     <div>
-                        <label htmlFor="keySkills" className="block text-sm font-medium text-gray-700 mb-1">Key Required Skills (Comma Separated)</label>
-                        <input id="keySkills" type="text" value={keySkills} onChange={(e) => setKeySkills(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black" placeholder="e.g., Python, SQL, NLP, machine learning deployment"/>
+                        <label htmlFor="keySkills" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Key Required Skills (Comma Separated)</label>
+                        <input id="keySkills" type="text" value={keySkills} onChange={(e) => setKeySkills(e.target.value)} className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., Python, SQL, NLP, machine learning deployment"/>
                     </div>
 
                     <div>
-                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">Experience Level</label>
-                        <select id="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black">
+                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Experience Level</label>
+                        <select id="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100">
                             <option value="Entry-level (0-3 years)">Entry-level (0-3 years)</option>
                             <option value="Mid-level (4-7 years)">Mid-level (4-7 years)</option>
                             <option value="Senior (8+ years)">Senior (8+ years)</option>
@@ -79,20 +80,20 @@ export default function InterviewQuestionGeneratorTool({ showStatus, statusMessa
                         </select>
                     </div>
 
-                     <div className="pt-4 border-t">
-                        <span className="block text-sm font-medium text-gray-700 mb-2">Number of Questions per Category (1-10)</span>
+                     <div className="pt-4 border-t dark:border-slate-700">
+                        <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Number of Questions per Category (1-10)</span>
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label htmlFor="technicalCount" className="block text-sm text-gray-600 mb-1">Technical/Domain</label>
-                                <input id="technicalCount" type="number" value={technicalCount} onChange={(e) => setTechnicalCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"/>
+                                <label htmlFor="technicalCount" className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Technical/Domain</label>
+                                <input id="technicalCount" type="number" value={technicalCount} onChange={(e) => setTechnicalCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"/>
                             </div>
                              <div>
-                                <label htmlFor="behavioralCount" className="block text-sm text-gray-600 mb-1">Behavioral/STAR</label>
-                                <input id="behavioralCount" type="number" value={behavioralCount} onChange={(e) => setBehavioralCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"/>
+                                <label htmlFor="behavioralCount" className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Behavioral/STAR</label>
+                                <input id="behavioralCount" type="number" value={behavioralCount} onChange={(e) => setBehavioralCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"/>
                             </div>
                              <div>
-                                <label htmlFor="cultureCount" className="block text-sm text-gray-600 mb-1">Culture/Situational</label>
-                                <input id="cultureCount" type="number" value={cultureCount} onChange={(e) => setCultureCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white text-black"/>
+                                <label htmlFor="cultureCount" className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Culture/Situational</label>
+                                <input id="cultureCount" type="number" value={cultureCount} onChange={(e) => setCultureCount(Math.max(1, Math.min(10, Number(e.target.value))))} min="1" max="10" className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"/>
                             </div>
                         </div>
                     </div>
@@ -108,13 +109,13 @@ export default function InterviewQuestionGeneratorTool({ showStatus, statusMessa
                 </button>
             </div>
             
-            <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
+            <div className={`p-3 rounded-lg text-sm transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>
                 {statusMessage}
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 min-h-[300px]">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Generated Questions</h3>
-                <pre className="whitespace-pre-wrap text-gray-700 text-sm font-sans">
+            <div className="bg-gray-50 dark:bg-slate-900/50 p-6 rounded-xl border border-gray-200 dark:border-slate-700 min-h-[300px]">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Generated Questions</h3>
+                <pre className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 text-sm font-sans">
                     {questionsResult || 'Questions will be generated here in three competency groups: Technical, Behavioral, and Culture Fit.'}
                 </pre>
             </div>

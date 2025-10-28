@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { CompanyProfile, Pipelines, ProfilePipelineEntry, RecommendedCandidate } from '../types';
 import { callGeminiForMatching } from '../services/geminiService';
@@ -119,8 +120,8 @@ export default function JobBroadcasterTool({ showStatus, isLoading, setIsLoading
 
     return (
         <div className="space-y-6">
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-                <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6">
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6">
                     <Rss className="w-6 h-6 mr-3 text-[#4F46E5]" />
                     Job Broadcaster (Prototype)
                 </h2>
@@ -128,16 +129,16 @@ export default function JobBroadcasterTool({ showStatus, isLoading, setIsLoading
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 space-y-6">
                         <div>
-                            <label htmlFor="broadcast-jd" className="block text-sm font-medium text-gray-700 mb-1">Final Job Description</label>
-                            <textarea id="broadcast-jd" value={broadcastJobDescription} onChange={(e) => setBroadcastJobDescription(e.target.value)} rows={12} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 bg-white text-black" placeholder="Paste the final, audited job description here to automatically match against your candidate pipeline..."/>
+                            <label htmlFor="broadcast-jd" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Final Job Description</label>
+                            <textarea id="broadcast-jd" value={broadcastJobDescription} onChange={(e) => setBroadcastJobDescription(e.target.value)} rows={12} className="block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-[#4F46E5] focus:ring-[#4F46E5] p-4 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="Paste the final, audited job description here to automatically match against your candidate pipeline..."/>
                         </div>
 
                         <div>
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Select Platforms to Post On</h3>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Select Platforms to Post On</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 {Object.keys(selectedPlatforms).map(platform => (
-                                    <div key={platform} onClick={() => handlePlatformToggle(platform as keyof typeof selectedPlatforms)} className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${selectedPlatforms[platform as keyof typeof selectedPlatforms] ? 'border-indigo-500 bg-indigo-50 shadow-sm' : 'border-gray-300 bg-gray-50 hover:border-gray-400'}`}>
-                                        <span className="text-lg font-bold capitalize text-gray-700">{platform}</span>
+                                    <div key={platform} onClick={() => handlePlatformToggle(platform as keyof typeof selectedPlatforms)} className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center ${selectedPlatforms[platform as keyof typeof selectedPlatforms] ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 shadow-sm' : 'border-gray-300 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50 hover:border-gray-400 dark:hover:border-slate-500'}`}>
+                                        <span className="text-lg font-bold capitalize text-gray-700 dark:text-gray-300">{platform}</span>
                                     </div>
                                 ))}
                             </div>
@@ -146,15 +147,15 @@ export default function JobBroadcasterTool({ showStatus, isLoading, setIsLoading
 
                     <div className="space-y-6">
                          <div>
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Connections</h3>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Account Connections</h3>
                             <div className="space-y-3">
                                 {Object.keys(connections).map(platform => (
-                                    <div key={platform} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                                        <span className="font-medium capitalize text-gray-700">{platform}</span>
+                                    <div key={platform} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg border dark:border-slate-700">
+                                        <span className="font-medium capitalize text-gray-700 dark:text-gray-300">{platform}</span>
                                         {connections[platform as keyof typeof connections] ? (
-                                            <span className="flex items-center text-sm font-semibold text-green-600"><CheckCheck className="w-4 h-4 mr-1" /> Connected</span>
+                                            <span className="flex items-center text-sm font-semibold text-green-600 dark:text-green-400"><CheckCheck className="w-4 h-4 mr-1" /> Connected</span>
                                         ) : (
-                                            <button onClick={() => handleConnect(platform as keyof typeof connections)} className="text-sm text-blue-600 hover:underline" disabled={isLoading}>Connect</button>
+                                            <button onClick={() => handleConnect(platform as keyof typeof connections)} className="text-sm text-blue-600 dark:text-blue-400 hover:underline" disabled={isLoading}>Connect</button>
                                         )}
                                     </div>
                                 ))}

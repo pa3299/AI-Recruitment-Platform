@@ -6,7 +6,20 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Recruitment Suite</title>
+    <script>
+      // Prevent FOUC by applying theme from localStorage before React loads
+      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
   <script type="importmap">
 {
   "imports": {
@@ -18,7 +31,7 @@
 }
 </script>
 </head>
-  <body>
+  <body class="bg-[#F8F9FA] dark:bg-gray-900">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

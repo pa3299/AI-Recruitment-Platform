@@ -58,14 +58,15 @@ export default function GenerativeFeedbackTool({ showStatus, statusMessage, isLo
             const content = await callGemini(userQuery, FEEDBACK_SYSTEM_PROMPT, true);
             setFeedbackMessage(content);
             showStatus(`Feedback for ${status.toLowerCase()} candidate generated successfully.`);
-        } catch (error) {
+// FIX: Changed 'error' to 'err' to avoid potential scope conflicts and added missing dependencies to useCallback.
+        } catch (err) {
             setFeedbackMessage('Failed to generate feedback due to an API error.');
             showStatus('Error during generation. Check console for details.', 5000);
-            console.error(error);
+            console.error(err);
         } finally {
             setIsLoading(false);
         }
-    }, [setIsLoading, showStatus, FEEDBACK_SYSTEM_PROMPT]);
+    }, [setIsLoading, showStatus, FEEDBACK_SYSTEM_PROMPT, setFeedbackMessage, setIsSavedToPipeline]);
 
     const handleLoadExample = useCallback((statusKey: keyof typeof exampleData) => {
         const example = exampleData[statusKey];
@@ -82,7 +83,8 @@ export default function GenerativeFeedbackTool({ showStatus, statusMessage, isLo
         
         showStatus(`Loading example for ${statusKey.replace('_', ' ')} and generating feedback...`);
         handleGenerateFeedback(example.name, example.job, example.company, example.jd, example.notes, example.status as 'HIRED' | 'REJECTED');
-    }, [handleGenerateFeedback, showStatus, setCompanyName]);
+// FIX: Added missing dependencies to useCallback hook to ensure all state setters are correctly scoped.
+    }, [handleGenerateFeedback, showStatus, setCompanyName, setCandidateName, setJobTitle, setJobDescriptionForFeedback, setInterviewNotes, setApplicationStatus, setUploadedResumeName, setUploadedNotesName]);
 
 
     const handleCopyFeedback = () => {
@@ -101,10 +103,11 @@ export default function GenerativeFeedbackTool({ showStatus, statusMessage, isLo
         const newPipelineEntry = {
             id: Date.now(),
             type: 'feedback' as const,
-            candidateName,
-            jobTitle,
-            applicationStatus,
-            feedbackMessage,
+// FIX: Explicitly defined properties to avoid shorthand property errors in case of scope issues.
+            candidateName: candidateName,
+            jobTitle: jobTitle,
+            applicationStatus: applicationStatus,
+            feedbackMessage: feedbackMessage,
         };
 
         setPipelines(prev => ({
@@ -129,14 +132,14 @@ export default function GenerativeFeedbackTool({ showStatus, statusMessage, isLo
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="p-8 bg-white rounded-2xl shadow-lg border border-gray-200 h-full">
-                <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6 border-b pb-4">
+            <div className="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 h-full">
+                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6 border-b dark:border-slate-600 pb-4">
                     <Edit className="w-6 h-6 mr-3 text-[#4F46E5]" />
                     1. Candidate Context & JD Ingestion
                 </h2>
                 
-                <div className="mb-6 p-4 border border-indigo-300 bg-indigo-50 rounded-lg">
-                    <p className="font-medium text-indigo-700 mb-3 text-sm">Load Example Data:</p>
+                <div className="mb-6 p-4 border border-indigo-300 dark:border-indigo-800/50 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                    <p className="font-medium text-indigo-700 dark:text-indigo-300 mb-3 text-sm">Load Example Data:</p>
                     <div className="flex flex-wrap gap-3">
                         <button onClick={() => handleLoadExample('HIRED')} disabled={isLoading} className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-full hover:bg-green-700 transition duration-150 shadow-md disabled:opacity-50"><ThumbsUp className="w-4 h-4 mr-2" /> Hired</button>
                         <button onClick={() => handleLoadExample('REJECTED_PIPELINE')} disabled={isLoading} className="flex items-center px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-full hover:bg-amber-700 transition duration-150 shadow-md disabled:opacity-50"><RefreshCcw className="w-4 h-4 mr-2" /> Pipeline</button>
@@ -146,39 +149,39 @@ export default function GenerativeFeedbackTool({ showStatus, statusMessage, isLo
 
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <label className="block"><span className="text-gray-700 font-medium">Candidate Name</span><input type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black" placeholder="e.g., Jane Doe" /></label>
-                        <label className="block"><span className="text-gray-700 font-medium">Company Name</span> <input type="text" value={companyProfile.name} onChange={(e) => setCompanyName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black" placeholder="e.g., Acme Corp"/></label>
+                        <label className="block"><span className="text-gray-700 dark:text-gray-300 font-medium">Candidate Name</span><input type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., Jane Doe" /></label>
+                        <label className="block"><span className="text-gray-700 dark:text-gray-300 font-medium">Company Name</span> <input type="text" value={companyProfile.name} onChange={(e) => setCompanyName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., Acme Corp"/></label>
                     </div>
-                    <label className="block"><span className="text-gray-700 font-medium">Job Title</span><input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black" placeholder="e.g., DevOps Engineer"/></label>
-                    <label className="block"><span className="text-gray-700 font-medium">Application Status</span><select value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value as 'HIRED'|'REJECTED')} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black"><option value="REJECTED">REJECTED</option><option value="HIRED">HIRED</option></select></label>
-                    <label className="block pt-2"><span className="text-gray-700 font-medium">Full Job Description (JD Ingestion)</span> <textarea value={jobDescriptionForFeedback} onChange={(e) => setJobDescriptionForFeedback(e.target.value)} rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black" placeholder="Paste the full job description here. This ensures the feedback is mapped to the exact requirements."/></label>
+                    <label className="block"><span className="text-gray-700 dark:text-gray-300 font-medium">Job Title</span><input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., DevOps Engineer"/></label>
+                    <label className="block"><span className="text-gray-700 dark:text-gray-300 font-medium">Application Status</span><select value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value as 'HIRED'|'REJECTED')} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100"><option value="REJECTED">REJECTED</option><option value="HIRED">HIRED</option></select></label>
+                    <label className="block pt-2"><span className="text-gray-700 dark:text-gray-300 font-medium">Full Job Description (JD Ingestion)</span> <textarea value={jobDescriptionForFeedback} onChange={(e) => setJobDescriptionForFeedback(e.target.value)} rows={4} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="Paste the full job description here. This ensures the feedback is mapped to the exact requirements."/></label>
                     <div className="pt-2">
-                        <span className="text-gray-700 font-medium flex items-center mb-2"><Paperclip className="w-4 h-4 mr-2 text-indigo-500" />Source Documents (Simulation)</span>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium flex items-center mb-2"><Paperclip className="w-4 h-4 mr-2 text-indigo-500" />Source Documents (Simulation)</span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <input type="file" ref={resumeInputRef} onChange={(e) => handleFileChange(e, setUploadedResumeName, 'CV/Cover Letter')} accept=".pdf,.doc,.docx,.txt" className="hidden"/>
-                            <button onClick={() => resumeInputRef.current?.click()} className="w-full text-center p-3 text-sm rounded-lg border-2 border-dashed border-gray-300 hover:border-indigo-500 transition duration-150 bg-gray-50 hover:bg-white text-gray-700 truncate" title={uploadedResumeName || 'Upload CV/Cover Letter'}><FileUp className="w-4 h-4 inline mr-2" />{uploadedResumeName ? `Resume: ${uploadedResumeName}` : 'Upload CV/Cover Letter'}</button>
+                            <button onClick={() => resumeInputRef.current?.click()} className="w-full text-center p-3 text-sm rounded-lg border-2 border-dashed border-gray-300 dark:border-slate-600 hover:border-indigo-500 transition duration-150 bg-gray-50 dark:bg-slate-700/50 hover:bg-white dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 truncate" title={uploadedResumeName || 'Upload CV/Cover Letter'}><FileUp className="w-4 h-4 inline mr-2" />{uploadedResumeName ? `Resume: ${uploadedResumeName}` : 'Upload CV/Cover Letter'}</button>
                             <input type="file" ref={notesInputRef} onChange={(e) => handleFileChange(e, setUploadedNotesName, 'Meeting Notes')} accept=".pdf,.doc,.docx,.txt" className="hidden"/>
-                            <button onClick={() => notesInputRef.current?.click()} className="w-full text-center p-3 text-sm rounded-lg border-2 border-dashed border-gray-300 hover:border-indigo-500 transition duration-150 bg-gray-50 hover:bg-white text-gray-700 truncate" title={uploadedNotesName || 'Upload Meeting Notes File'}><FileText className="w-4 h-4 inline mr-2" />{uploadedNotesName ? `Notes: ${uploadedNotesName}` : 'Upload Meeting Notes File'}</button>
+                            <button onClick={() => notesInputRef.current?.click()} className="w-full text-center p-3 text-sm rounded-lg border-2 border-dashed border-gray-300 dark:border-slate-600 hover:border-indigo-500 transition duration-150 bg-gray-50 dark:bg-slate-700/50 hover:bg-white dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 truncate" title={uploadedNotesName || 'Upload Meeting Notes File'}><FileText className="w-4 h-4 inline mr-2" />{uploadedNotesName ? `Notes: ${uploadedNotesName}` : 'Upload Meeting Notes File'}</button>
                         </div>
                     </div>
-                    <label className="block pt-2"><span className="text-gray-700 font-medium">Interview Notes / Differentiating Factors (For AI Input)</span><textarea value={interviewNotes} onChange={(e) => setInterviewNotes(e.target.value)} rows={6} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white text-black" placeholder="e.g., Strong communication skills, but lacked experience with X framework. The final decision was due to needing more specific Y experience."/></label>
+                    <label className="block pt-2"><span className="text-gray-700 dark:text-gray-300 font-medium">Interview Notes / Differentiating Factors (For AI Input)</span><textarea value={interviewNotes} onChange={(e) => setInterviewNotes(e.target.value)} rows={6} className="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3 bg-white dark:bg-slate-700 text-black dark:text-gray-100" placeholder="e.g., Strong communication skills, but lacked experience with X framework. The final decision was due to needing more specific Y experience."/></label>
                 </div>
                 <button onClick={() => handleGenerateFeedback(candidateName, jobTitle, companyProfile.name, jobDescriptionForFeedback, interviewNotes, applicationStatus)} disabled={isGenerateDisabled} className="mt-6 w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">{isLoading ? (<Loader2 className="w-5 h-5 mr-2 animate-spin" />) : (<Send className="w-5 h-5 mr-2" />)}Generate Personalized Message</button>
             </div>
-            <div className="p-8 bg-white rounded-2xl shadow-lg border border-gray-200 h-full flex flex-col">
-                <h2 className="text-2xl font-semibold text-gray-800 flex items-center mb-6 border-b pb-4"><MessageSquare className="w-6 h-6 mr-3 text-[#4F46E5]" />2. Generated Communication (Editable)</h2>
-                <div className={`p-3 rounded-lg text-sm mb-4 transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>{statusMessage}</div>
-                <div className="flex-grow relative">{isLoading && (<div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center rounded-lg z-10"><Loader2 className="w-8 h-8 text-indigo-600 animate-spin" /><span className="ml-3 text-lg text-indigo-600">Generating...</span></div>)}<textarea value={feedbackMessage} onChange={(e) => setFeedbackMessage(e.target.value)} rows={15} className="w-full h-full min-h-[300px] rounded-md border-gray-300 bg-white shadow-inner p-4 text-black resize-none font-sans text-sm" placeholder="Your personalized, constructive feedback message will appear here after generation. This field is editable."/></div>
+            <div className="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 h-full flex flex-col">
+                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center mb-6 border-b dark:border-slate-600 pb-4"><MessageSquare className="w-6 h-6 mr-3 text-[#4F46E5]" />2. Generated Communication (Editable)</h2>
+                <div className={`p-3 rounded-lg text-sm mb-4 transition-all duration-300 ${statusMessage ? 'opacity-100 bg-blue-100 border-blue-400 text-blue-800 dark:bg-blue-900/50 dark:border-blue-700 dark:text-blue-300' : 'opacity-0 h-0 p-0 overflow-hidden'}`}>{statusMessage}</div>
+                <div className="flex-grow relative">{isLoading && (<div className="absolute inset-0 bg-white dark:bg-slate-800 bg-opacity-80 dark:bg-opacity-80 flex items-center justify-center rounded-lg z-10"><Loader2 className="w-8 h-8 text-indigo-600 animate-spin" /><span className="ml-3 text-lg text-indigo-600">Generating...</span></div>)}<textarea value={feedbackMessage} onChange={(e) => setFeedbackMessage(e.target.value)} rows={15} className="w-full h-full min-h-[300px] rounded-md border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900/50 shadow-inner p-4 text-black dark:text-gray-100 resize-none font-sans text-sm" placeholder="Your personalized, constructive feedback message will appear here after generation. This field is editable."/></div>
                 <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                    <button onClick={handleCopyFeedback} disabled={!feedbackMessage || isLoading} className="flex-1 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-indigo-600 bg-indigo-100 hover:bg-indigo-200 transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"><Clipboard className="w-5 h-5 mr-2" />Copy Edited Message</button>
+                    <button onClick={handleCopyFeedback} disabled={!feedbackMessage || isLoading} className="flex-1 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-indigo-600 bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900/50 dark:text-indigo-300 dark:hover:bg-indigo-900 transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"><Clipboard className="w-5 h-5 mr-2" />Copy Edited Message</button>
                      <div className="flex-1 flex flex-col gap-2">
-                         <select value={pipelineToSaveTo} onChange={(e) => setPipelineToSaveTo(e.target.value)} className="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white text-black" disabled={pipelineNames.length === 0}>
+                         <select value={pipelineToSaveTo} onChange={(e) => setPipelineToSaveTo(e.target.value)} className="w-full p-3 rounded-md border-gray-300 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-slate-700 text-black dark:text-gray-100" disabled={pipelineNames.length === 0}>
                              {pipelineNames.length > 0 ? (pipelineNames.map(name => <option key={name} value={name}>{name}</option>)) : (<option>Create a pipeline first</option>)}
                         </select>
                         <button onClick={handleSaveToPipeline} disabled={!feedbackMessage || isLoading || isSavedToPipeline || !pipelineToSaveTo} className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-teal-600 hover:bg-teal-700 transition duration-150 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">{isSavedToPipeline ? (<><CheckCheck className="w-5 h-5 mr-2" /> Saved</>) : (<><FileUp className="w-5 h-5 mr-2" /> Save to Pipeline</>)}</button>
                     </div>
                 </div>
-                <div className="mt-4 text-xs text-gray-500 text-center"><AlertTriangle className="inline w-3 h-3 mr-1" />Powered by Gemini 2.5 Flash (with Google Search Grounding for context).</div>
+                <div className="mt-4 text-xs text-gray-500 dark:text-gray-400 text-center"><AlertTriangle className="inline w-3 h-3 mr-1" />Powered by Gemini 2.5 Flash (with Google Search Grounding for context).</div>
             </div>
         </div>
     );
